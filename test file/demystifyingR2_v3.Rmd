@@ -105,7 +105,7 @@ Open the table of values to see what values year takes on.
 
 Drop the year variable from the data set.
 ```{r}
-
+mtcars <- subset(mtcars, select = -year)
 ```
 
 
@@ -146,8 +146,8 @@ You'll have the opportunity to create one Rmd file for the final project in
 this class and submit the Rmd file and knitted output (or HTML file). You'll need the knitr package to do that so let's install that now. **Uncomment** the follownig two lines of code and run them.
 
 ```{r}
-# install.packages('knitr', dependencies = T)
-# library(knitr)
+#install.packages('knitr', dependencies = T)
+#library(knitr)
 ```
 
 Once you've installed knitr, **comment** out the two lines of code above.
@@ -161,6 +161,11 @@ answer a question to continue on in Lesson 2.
 
 Which car(s) have an mpg (miles per gallon) greater than or equal to 30
 OR hp (horsepower) less than 60? Create an R chunk of code to answer the question.
+```{r}
+lightCars <- subset(mtcars,mpg>=30|hp<60)
+lightCars
+dim(lightCars)
+```
 
 
 
