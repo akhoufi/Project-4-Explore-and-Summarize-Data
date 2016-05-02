@@ -261,6 +261,14 @@ grid.arrange(p1,p2,p3,ncol=1)
 
 ```{r Frequency Polygons}
 
+ggplot(aes(x = friend_count, y = ..count../sum(..count..)), data = subset(pf, !is.na(gender))) + 
+  geom_freqpoly(aes(color = gender), binwidth=10) + 
+  scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50)) + 
+  xlab('Friend Count') + 
+  ylab('Percentage of users with that friend count')
+
+ ggplot(aes(x = www_likes), data = subset(pf, !is.na(gender))) +   geom_freqpoly(aes(color = gender)) +   scale_x_log10()
+
 ```
 
 ***
@@ -269,7 +277,14 @@ grid.arrange(p1,p2,p3,ncol=1)
 Notes:
 
 ```{r Likes on the Web}
+summary(pf$www_likes)
+ggplot(aes(x = www_likes), data = subset(pf, !is.na(gender))) + 
+  geom_freqpoly(aes(color = gender)) + 
+  scale_x_continuous()+
+  sscale_x_log10()
 
+
+by(pf$www_likes, pf$gender,sum)
 ```
 
 
@@ -279,13 +294,16 @@ Notes:
 Notes:
 
 ```{r Box Plots}
-
+qplot(x=gender,y=friend_count, data=subset(pf,!is.na(gender)),geom='boxplot')+
+  scale_y_continuous(limits = c(0,1000))
 ```
 
 #### Adjust the code to focus on users who have friend counts between 0 and 1000.
 
 ```{r}
-
+qplot(x=gender,y=friend_count, data=subset(pf,!is.na(gender)),geom='boxplot')+
+  coord_cartesian(ylim = c(0,1000))
+```
 ```
 
 ***
@@ -294,6 +312,12 @@ Notes:
 Notes:
 
 ```{r Box Plots, Quartiles, and Friendships}
+qplot(x=gender,y=friend_count, data=subset(pf,!is.na(gender)),geom='boxplot')+
+  coord_cartesian(ylim = c(0,250))
+  
+by(pf$friend_count,pf$gender, summary)
+  
+```
 
 ```
 
@@ -302,7 +326,8 @@ Response:
 #### Write about some ways that you can verify your answer.
 Response:
 ```{r Friend Requests by Gender}
-
+qplot(x=gender,y=friendships_initiated, data=subset(pf,!is.na(gender)),geom='boxplot')+
+  coord_cartesian(ylim = c(0,200))
 ```
 
 Response:
@@ -313,6 +338,11 @@ Response:
 Notes:
 
 ```{r Getting Logical}
+pf$mobile_check_in <- NA
+
+pf$mobile_check_in <- ifelse(pf$mobile_likes>0,1, 0)
+pf$mobile_check_in <- factor(pf$mobile_check_in)
+
 
 ```
 
