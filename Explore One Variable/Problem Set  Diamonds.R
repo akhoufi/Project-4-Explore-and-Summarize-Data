@@ -115,8 +115,8 @@ diamonds_mp_by_color <- summarise(diamonds_by_color, mean_price = mean(price))
 library(gridExtra)
 
 p1 <- ggplot(aes(x = clarity, y = mean_price), data = diamonds_mp_by_clarity)+
-  geom_bar()
+  geom_bar(stat = 'identity')
 
-p2 <- ggplot(aes(x = colour, y = mean_price), data = diamonds_mp_by_color)+
-  geom_bar()
+p2 <- ggplot(aes(x = color, y = mean_price), data = diamonds_mp_by_color)+
+  geom_bar(stat = 'identity')
 grid.arrange(p1,p2, ncol=1)
