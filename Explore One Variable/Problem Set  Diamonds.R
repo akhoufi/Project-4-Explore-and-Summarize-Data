@@ -120,3 +120,45 @@ p1 <- ggplot(aes(x = clarity, y = mean_price), data = diamonds_mp_by_clarity)+
 p2 <- ggplot(aes(x = color, y = mean_price), data = diamonds_mp_by_color)+
   geom_bar(stat = 'identity')
 grid.arrange(p1,p2, ncol=1)
+
+# Problem Set Three Variables
+ggplot(aes(x = price),
+       data = diamonds) +
+  geom_histogram(aes(fill = cut)) +
+  facet_wrap( ~ color) +
+  scale_x_log10() +
+  scale_y_continuous(limits = c(0,600)) +
+  scale_fill_brewer(type = 'qual')
+
+
+ggplot(aes(x = table, y = price), 
+       data = diamonds) +
+  geom_point(aes(color = cut)) +
+  scale_color_brewer(type = 'qual') +
+  scale_x_continuous(limits = c(50,80), breaks = seq(50,80,2))
+
+ggplot(aes(x = volume, y = price),
+       data = subset(diamonds,!is.na(diamonds$price) & volume > 0)) +
+  geom_point(aes(color = clarity, size =1)) +
+  scale_color_brewer(type = 'div') +
+  scale_x_continuous(limits = c(0,350)) +
+  scale_y_log10()
+
+pf  <- read.csv('pseudo_facebook.tsv', sep='\t')
+pf$prop_initiated <- pf$friendships_initiated / pf$friend_count
+
+pf$year_joined <-floor( 2014-pf$tenure/365)
+pf$year_joined.bucket <- cut(pf$year_joined,c(2004,2009,2011,2012,2014))
+ggplot(aes(x=tenure, y = prop_initiated),
+       data = subset(pf,!is.na(tenure)&!is.na(prop_initiated))) +
+  geom_smooth(aes(color = year_joined.bucket), stat = 'summary', fun.y = median) +
+  scale_y_continuous(limits =c(0,0.75), breaks = c(0,0.25,0.50,0.75))
+
+pf_year_2012 <- subset(pf, pf$year_joined.bucket == '(2012,2014]')
+with(pf_year_2012, summary(prop_initiated))
+
+ggplot(aes(x=cut, y=price/carat), 
+       data=diamonds) +
+  facet_wrap(~clarity) +
+  geom_jitter(aes(color=color)) +
+  scale_color_brewer(type = 'div')

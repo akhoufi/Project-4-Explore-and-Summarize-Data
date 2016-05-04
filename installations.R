@@ -33,3 +33,12 @@ if( require("dplyr") == FALSE)
 
 if( require("alr3") == FALSE)
   install.packages("alr3", dependencies = c("Depends","Suggests"))
+
+if( require("reshape2") == FALSE)
+  install.packages("reshape2", dependencies = c("Depends","Suggests"))
+
+if( require("tidyr") == FALSE)
+  install.packages("tidyr", dependencies = c("Depends","Suggests"))
+
+if( require("GGally") == FALSE)
+  install.packages("GGally", dependencies = c("Depends","Suggests"))
